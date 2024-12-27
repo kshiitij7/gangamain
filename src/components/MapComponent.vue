@@ -1,10 +1,7 @@
 <template>
 <div ref="map" style=" width: 100%;height: 100%;position: relative;">
-    <div id="mouse-pos" style="position: absolute; bottom:6.3%; left: 6.8%; background-color: black;color: white; padding: 0.1em 0.1em; border-radius: 4px; font-family: 'Poppins', sans-serif ; font-size: calc(4.5px + 0.45vw); z-index: 1000; pointer-events: none; max-width: 30%; text-align: center;"></div>
+    <div id="mouse-pos" style="position: absolute; bottom:6.3%; left: 0%; background-color: black;color: white; padding: 0.1em 0.1em; border-radius: 4px; font-family: 'Poppins', sans-serif ; font-size: calc(4.5px + 0.45vw); z-index: 1000; pointer-events: none; max-width: 30%; text-align: center;"></div>
 </div>
-
-
-
 </template>
   
 <script>
@@ -29,10 +26,7 @@ import eventBus from '@/event-bus';
 import { createBox } from 'ol/interaction/Draw';
 import MousePosition from 'ol/control/MousePosition.js';
 import {createStringXY} from 'ol/coordinate.js';
-import axios from 'axios'; // Import axios for making HTTP requests
-
-
-
+import axios from 'axios';
 
 export default {
     name: 'MapComponent',
@@ -159,6 +153,7 @@ export default {
         eventBus.on('cropToolToggled', this.toggleCropTool);
         eventBus.on('search-query', this.handleSearchQuery);
 
+        
     },
     
 
@@ -285,6 +280,16 @@ export default {
             console.log('Search query received:', query);
             this.searchPlace(query);
         },
+        flyTo(location, zoomLevel) {
+    const view = this.map.getView();
+
+    // Animate the transition to the new location
+    view.animate({
+        center: location,
+        zoom: zoomLevel,
+        duration: 1000 // 5 seconds
+    });
+},
         async searchPlace(query) {
             try {
                 const response = await axios.get('https://nominatim.openstreetmap.org/search', {
@@ -295,10 +300,9 @@ export default {
                     const place = results[0];
                     const lat = parseFloat(place.lat);
                     const lon = parseFloat(place.lon);
-                    this.map.getView().setCenter([lon, lat]);
-                    this.map.getView().setZoom(15); 
+                    this.flyTo([lon, lat], 18);
                 } else {
-                    console.log('Place not found!');
+                    alert('Location not found!');
                 }
             } catch (error) {
                 console.error('Search failed', error);
@@ -306,8 +310,7 @@ export default {
         },
     },
     beforeUnmount() {
-    // Unsubscribe from the event when the component is destroyed
-    eventBus.off('search-query', this.handleSearchQuery);  // Using mitt's `off`
+    eventBus.off('search-query', this.handleSearchQuery);  
   }
 };
 </script>
