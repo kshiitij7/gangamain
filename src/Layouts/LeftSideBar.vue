@@ -1,6 +1,6 @@
 <template>
     <div class="LeftSideBar">
-        <v-main>
+        <v-main style="--v-layout-top: 0px;">
             <v-navigation-drawer rail color="black" >
             <v-list>
                <!-- Layers Button -->
