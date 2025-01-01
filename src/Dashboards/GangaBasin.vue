@@ -1,7 +1,7 @@
 <template>
 <div class="GangaBasin">
     <v-main>
-        <div style="height: 86vh;">
+        <div style="height: 84vh;">
             <MapComponent :dashLayers="mapLayers" :center="[82.0662, 26.2648]" :zoom="6.5" :minZoom="6.5" />
         </div>
 
