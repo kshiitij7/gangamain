@@ -1,6 +1,6 @@
 <template>
 <div class="RightSideBar">
-    <v-main>
+    <v-main style="--v-layout-top: 0px;">
         <v-navigation-drawer rail app location="right" color="black">
             <v-list>
                 <!-- Search Button -->
