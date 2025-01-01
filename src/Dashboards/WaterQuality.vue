@@ -1,7 +1,7 @@
 <template>
 <div class="WaterQuality">
     <v-main>
-        <div style="height: 86vh;">
+        <div style="height: 84vh;">
             <MapComponent :dashLayers= "mapLayers" :center="[80.3319, 26.4499]" :zoom="10" :minZoom="5.5"/>
         </div>
 
