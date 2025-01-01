@@ -1,7 +1,7 @@
 <template>
     <div class="SolidWaste">
         <v-main>
-            <div style="height: 86vh;">
+            <div style="height: 84vh;">
                 <MapComponent :dashLayers= "mapLayers" :center="[82.0662, 26.2648]" :zoom="10" :minZoom="5.5"/>
             </div>
     
